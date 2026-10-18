@@ -1,29 +1,14 @@
+import { useContext } from 'react'; // 1. Importamos useContext
 import { useState, useEffect } from 'react'; // Hito 4
 import { Container, Row, Col } from 'react-bootstrap';
 import Header from '../components/Header';
 import CardPizza from '../components/CardPizza';
+import { PizzaContext } from '../context/PizzaContext'; // 2. Importamos PizzaContext
 // import { pizzas } from '../data/pizzas'; // Importamos el arreglo de pizzas desde la carpeta data
 
 const Home = () => {
-    // 1. Estado para almacenar las pizzas que vienen en la API
-    const [pizzas, setPizzas] = useState([]);
-
-    // 2. Función para hacer el fetch al backend
-    const consultarApi = async () => {
-        try {
-            const url = `${import.meta.env.VITE_API_URL}/api/pizzas`;
-            const response = await fetch(url);
-            const data = await response.json();
-            setPizzas(data);
-        } catch (error) {
-            console.log('Error al cargar las pizzas', error);
-        }
-    };
-
-    // 3. UseEffect para ejecutar la consulta al cargar el componente
-    useEffect(() => {
-        consultarApi();
-    }, []);
+    // 3. Consumimos el arreglo de pizzas desde PizzaContext
+    const { pizzas } = useContext(PizzaContext);
 
     return (
         <div>

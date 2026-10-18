@@ -1,26 +1,14 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react"; // 1. Importamos useContext
 import { Container, Card, Button } from "react-bootstrap";
-import imgP001 from '../assets/img/p001.jpeg'; // Hito 4
+import imgP001 from '../assets/img/p001.jpeg';
+import { PizzaContext } from "../context/PizzaContext"; // 2. Importamos PizzaContext
+import { CartContext } from "../context/CartContext"; // 3. Importamos CartContext
 
 const Pizza = () => {
-    // 1. Estado para almacenar los datos de la pizza individual
-    const [pizza, setPizza] = useState({});
-
-    // 2. Función para hacer el fetch de la pizza p001
-    const obtenerPizza = async () => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pizzas/p001`);
-            const data = await response.json();
-            setPizza(data);
-        } catch (error) {
-            console.log('Error al carga la pizza', error);
-        }
-    };
-
-    // 3. useEffect para invocar la función al montar el componente
-    useEffect(() => {
-        obtenerPizza();
-    }, []);
+    // 4. Consumimos la pizza individual desde PizzaContext
+    const { pizza } = useContext(PizzaContext);
+    // 5. Consumimos agregarAlCarrito desde CartContext
+    const { agregarAlCarrito } = useContext(CartContext);
 
     const imagenFinal = pizza.img && pizza.img.includes("firebasestorage")
         ? imgP001
@@ -48,7 +36,18 @@ const Pizza = () => {
                         <hr />
                         <div className="d-flex justify-content-between align-items-center">
                             <h4 className="fw-bold mb-0">Precio: ${pizza.price}</h4>
-                            <Button variant="dark" size="sm">Añadir 🛒</Button>
+                            <Button
+                                variant="dark"
+                                size="sm"
+                                onClick={() => agregarAlCarrito({
+                                    id: pizza.id,
+                                    name: pizza.name,
+                                    price: pizza.price,
+                                    img: imagenFinal
+                                })}
+                            >
+                                Añadir 🛒
+                            </Button>
                         </div>
                     </Card.Body>
                 </Card>
@@ -56,7 +55,7 @@ const Pizza = () => {
                 <p className="text-center">Cargando información de la pizza...</p>
             )}
         </Container>
-    )
-}
+    );
+};
 
 export default Pizza;
