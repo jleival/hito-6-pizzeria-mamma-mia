@@ -1,41 +1,10 @@
-import { useState } from 'react';
+import { useContext } from 'react'; // 1. Importamos useContext en lugar de useState
 import { Container, Button, Row, Col, Image } from 'react-bootstrap';
-import { pizzaCart } from '../data/pizzas'; // Importamos el array pizzaCart simulado
+import { CartContext } from '../context/CartContext'; // 2. Importamos CartContext
 
 const Cart = () => {
-    // Usamos useState para manejar el estado de las pizzas en el carrito
-    const [cart, setCart] = useState(pizzaCart);
-
-    // Función para aumentar la cantidad de una pizza
-    const aumentarCantidad = (id) => {
-        setCart(
-            cart.
-                map(item =>
-                    item.id === id
-                        ? { ...item, count: item.count + 1 }
-                        : item
-                )
-        );
-    };
-
-    // Función para disminuir la cantidad (y filtrar si llega a 0)
-    const disminuirCantidad = (id) => {
-        setCart(
-            cart.
-                map(item =>
-                    item.id === id
-                        ? { ...item, count: item.count - 1 }
-                        : item
-                )
-                .filter(item => item.count > 0)
-        );
-    };
-
-    // Calculamos el total de la compra dinámicamente
-    const total = cart.reduce(
-        (acum, item) => acum + item.price * item.count,
-        0
-    );
+    // 3. Consumimos el estado, las funciones y el total directamente desde CartContext
+    const { cart, aumentarCantidad, disminuirCantidad, total } = useContext(CartContext);
 
     return (
         <Container className="my-5" style={{ maxWidth: '600px' }}>
