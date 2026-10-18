@@ -1,8 +1,11 @@
+import { useContext } from 'react'; // 1. Importamos useContext
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext'; // 2. Importamos CartContext
 
 const MyNavbar = () => {
-  const total = 25000;
+  // 3. Obtenemos el total dinámico desde CartContext (reemplaza const total = 25000)
+  const { total } = useContext(CartContext);
   const token = false; // Cambia a true o false según tus pruebas
 
   return (
@@ -19,8 +22,8 @@ const MyNavbar = () => {
         {/* Contenedor colapsable */}
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto d-flex flex-column flex-lg-row gap-2 my-2 my-lg-0 w-100 align-lg-items-center">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="btn text-white border border-secondary text-start text-lg-center px-3 py-2"
               style={{ backgroundColor: 'transparent' }}
             >
@@ -29,15 +32,15 @@ const MyNavbar = () => {
 
             {token ? (
               <>
-                <Link 
-                  to="/profile" 
+                <Link
+                  to="/profile"
                   className="btn text-white border border-secondary text-start text-lg-center px-3 py-2"
                   style={{ backgroundColor: 'transparent' }}
                 >
                   🔓 Profile
                 </Link>
-                <Link 
-                  to="/logout" 
+                <Link
+                  to="/logout"
                   className="btn text-white border border-secondary text-start text-lg-center px-3 py-2"
                   style={{ backgroundColor: 'transparent' }}
                 >
@@ -46,15 +49,15 @@ const MyNavbar = () => {
               </>
             ) : (
               <>
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="btn text-white border border-secondary text-start text-lg-center px-3 py-2"
                   style={{ backgroundColor: 'transparent' }}
                 >
                   🔐 Login
                 </Link>
-                <Link 
-                  to="/register" 
+                <Link
+                  to="/register"
                   className="btn text-white border border-secondary text-start text-lg-center px-3 py-2"
                   style={{ backgroundColor: 'transparent' }}
                 >
@@ -66,8 +69,8 @@ const MyNavbar = () => {
 
           {/* Botón Total del Carrito alineado a la derecha */}
           <Nav className="mt-2 mt-lg-0">
-            <Link 
-              to="/cart" 
+            <Link
+              to="/cart"
               className="btn text-white border border-info px-3 py-2 text-start text-lg-center"
               style={{ backgroundColor: 'transparent' }}
             >
