@@ -55,7 +55,13 @@ const CardPizza = ({ id, name, price, ingredients, img, desc }) => {
                         <Link to="/pizza/p001" className="btn btn-outline-dark btn-sm">
                             Ver Más 👁️
                         </Link>
-                        <Button variant="dark" size="sm">Añadir 🛒</Button>
+                        <Button
+                            variant="dark"
+                            size="sm"
+                            onClick={() => agregarAlCarrito({ id, name, price, img: imagenFinal })}
+                        >
+                            Añadir 🛒
+                        </Button>
                     </div>
                 </div>
             </Card.Body>
